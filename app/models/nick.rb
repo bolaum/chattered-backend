@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: nicks
+#
+#  id           :integer          not null, primary key
+#  name         :string
+#  token_digest :string
+#  status       :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class Nick < ApplicationRecord
   has_many :messages
   has_many :owned_channels, class_name: 'Channel', foreign_key: 'owner_id'

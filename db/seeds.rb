@@ -1,17 +1,17 @@
 # create first user
-roland = Nick.create!(name: 'roland', token: '123456', status: 'online')
+roland = Nick.create!(name: 'roland', token_digest: Nick.digest('123456'), status: 'online')
 
 # create second user
-jake = Nick.create!(name: 'jake', token: '123456', status: 'online')
+jake = Nick.create!(name: 'jake', token_digest: Nick.digest('123456'), status: 'online')
 
 # create 8 more users
 random_users = []
 8.times do |n|
   name = Faker::Internet.user_name
-  token = Faker::Internet.password
+  token_digest = Nick.digest(Faker::Internet.password)
   status = 'online'
 
-  random_users << Nick.create!(name: name, token: token, status: status)
+  random_users << Nick.create!(name: name, token_digest: token_digest, status: status)
 end
 
 # create 2 channels and join them
