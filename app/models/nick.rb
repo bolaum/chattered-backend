@@ -3,9 +3,9 @@
 # Table name: nicks
 #
 #  id           :integer          not null, primary key
-#  name         :string
-#  token_digest :string
-#  status       :string
+#  name         :string           not null
+#  token_digest :string           not null
+#  status       :string           not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #

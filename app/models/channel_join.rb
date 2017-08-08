@@ -3,8 +3,8 @@
 # Table name: channel_joins
 #
 #  id         :integer          not null, primary key
-#  nick_id    :integer
-#  channel_id :integer
+#  nick_id    :integer          not null
+#  channel_id :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

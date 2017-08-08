@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Todos API', type: :request do
+RSpec.describe 'Nicks API', type: :request do
   # initialize test data
   let!(:nicks) { create_list(:nick, 10) }
   let(:nick_id) { nicks.first.id }

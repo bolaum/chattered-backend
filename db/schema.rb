@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 20170807135820) do
 
   create_table "channel_joins", force: :cascade do |t|
-    t.integer "nick_id"
-    t.integer "channel_id"
+    t.integer "nick_id", null: false
+    t.integer "channel_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["channel_id"], name: "index_channel_joins_on_channel_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20170807135820) do
 
   create_table "channels", force: :cascade do |t|
     t.string "title", null: false
-    t.integer "owner_id"
+    t.integer "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_channels_on_owner_id"
@@ -32,10 +32,10 @@ ActiveRecord::Schema.define(version: 20170807135820) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.text "content"
+    t.text "content", null: false
     t.datetime "sent_at", null: false
-    t.integer "nick_id"
-    t.integer "channel_id"
+    t.integer "nick_id", null: false
+    t.integer "channel_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["channel_id"], name: "index_messages_on_channel_id"
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 20170807135820) do
   end
 
   create_table "nicks", force: :cascade do |t|
-    t.string "name"
-    t.string "token_digest"
-    t.string "status"
+    t.string "name", null: false
+    t.string "token_digest", null: false
+    t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_nicks_on_name", unique: true

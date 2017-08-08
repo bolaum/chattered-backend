@@ -22,16 +22,17 @@ API
 * All requests should limit the number of results returned (pagination)
 
 ## Endpoints
-| Endpoint      | Method | Functionality                                     |
-| --------      | ------ | -------------                                     |
-| /login        | POST   | Login (nick online)                               |
-| /logout       | DELETE | Logout (nick offline)                             |
-| /nicks        | GET    | List all nicks                                    |
-| /nicks/:id    | GET    | Get nick data (status, joined and owned channels) |
-| /channels     | GET    | List all channels                                 |
-| /channels     | POST   | Create a channel                                  |
-| /channels/:id | GET    | Get channel data (owner, title, messages)         |
-| /channels/:id | POST   | Send message to channel                           |
+| Endpoint               | Method | Functionality                                     |
+| --------               | ------ | -------------                                     |
+| /login                 | POST   | Login (nick online)                               |
+| /logout                | DELETE | Logout (nick offline)                             |
+| /nicks                 | GET    | List all nicks                                    |
+| /nicks/:id             | GET    | Get nick data (status, joined and owned channels) |
+| /channels              | GET    | List all channels                                 |
+| /channels              | POST   | Create a channel                                  |
+| /channels/:id          | GET    | Get channel data (owner, title)                   |
+| /channels/:id/messages | GET    | Get channel messages                              |
+| /channels/:id/messages | POST   | Send message to channel                           |
 
 ## Models
 #### Nick
