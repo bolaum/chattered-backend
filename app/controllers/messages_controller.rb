@@ -7,8 +7,12 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = @channel.messages.create!(message_params)
-    json_response(@channel, :created)
+    unless @nick.joined_channels.exists?(@channel.id)
+      json_response({ message: 'User must join channel before posting.' }, :forbidden)
+    else
+      @message = @channel.messages.create!(message_params)
+      json_response(@channel, :created)
+    end
   end
 
   private

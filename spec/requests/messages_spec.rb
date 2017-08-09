@@ -32,13 +32,34 @@ RSpec.describe 'Messages API', type: :request do
       nick_id: nick_id
     } }
 
-    before { post "/channels/#{channel_id}/messages" }
-
     context 'when request attributes are valid' do
-      before { post "/channels/#{channel_id}/messages", params: valid_attributes }
+      context 'and user did not join channel' do
+        before { post "/channels/#{channel_id}/messages", params: valid_attributes }
 
-      it 'returns status code 201' do
-        expect(response).to have_http_status(201)
+        it 'returns status code 403' do
+          expect(response).to have_http_status(403)
+        end
+
+        it 'should not add message to channel' do
+          get "/channels/#{channel_id}/messages"
+          expect(json.size).to eq(50)
+        end
+      end
+
+      context 'and user joined channel' do
+        before {
+          # join channel
+          post "/channels/#{channel_id}",  params: { nick_id: nick_id }
+          post "/channels/#{channel_id}/messages", params: valid_attributes
+        }
+        it 'returns status code 201' do
+          expect(response).to have_http_status(201)
+        end
+
+        it 'should add one message to channel' do
+          get "/channels/#{channel_id}/messages"
+          expect(json.size).to eq(51)
+        end
       end
     end
 

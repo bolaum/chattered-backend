@@ -53,7 +53,7 @@ RSpec.describe 'Channels API', type: :request do
 
   # Test suite for POST /channels
   describe 'POST /channels' do
-    let(:valid_attributes) { { title: 'VisitNarnia', owner_id: nick_id } }
+    let(:valid_attributes) { { title: 'VisitNarnia', nick_id: nick_id } }
 
     context 'when request attributes are valid' do
       before { post "/channels", params: valid_attributes }
@@ -61,11 +61,16 @@ RSpec.describe 'Channels API', type: :request do
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
       end
+
+      it 'should create one channel' do
+        get "/channels"
+        expect(json.size).to eq(21)
+      end
     end
 
     context 'when an invalid request' do
       context 'has a blank title' do
-        before { post "/channels", params: { title: '   ', owner_id: nick_id } }
+        before { post "/channels", params: { title: '   ', nick_id: nick_id } }
 
         it 'returns status code 422' do
           expect(response).to have_http_status(422)
@@ -89,7 +94,7 @@ RSpec.describe 'Channels API', type: :request do
       end
 
       context 'has invalid owner' do
-        before { post "/channels", params: { title: 'Wasteland', owner_id: 1000 } }
+        before { post "/channels", params: { title: 'Wasteland', nick_id: 1000 } }
 
         it 'returns status code 404' do
           expect(response).to have_http_status(404)
@@ -99,6 +104,20 @@ RSpec.describe 'Channels API', type: :request do
           expect(response.body).to match(/Couldn't find Nick/)
         end
       end
+    end
+  end
+
+  # Test suite for POST /channels/:id
+  describe 'POST /channels/:id' do
+    before { post "/channels/#{id}", params: { nick_id: nick_id } }
+
+    it 'returns status code 202' do
+      expect(response).to have_http_status(202)
+    end
+
+    it 'should join the channel' do
+      get "/nicks/#{nick_id}"
+      expect(json['joined_channels'].size).to eq(1)
     end
   end
 end
