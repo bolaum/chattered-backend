@@ -31,6 +31,7 @@ API
 | /channels              | GET    | List all channels                                 |
 | /channels              | POST   | Create a channel                                  |
 | /channels/:id          | GET    | Get channel data (owner, title)                   |
+| /channels/:id          | POST   | Join channel                                      |
 | /channels/:id/messages | GET    | Get channel messages                              |
 | /channels/:id/messages | POST   | Send message to channel                           |
 
