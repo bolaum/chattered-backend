@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  post '/login',                  to: 'authentication#authenticate'
   get   '/nicks',                 to: 'nicks#list'
-  get   '/nicks/:id',             to: 'nicks#show'
+  # constraint to accept dotted usernames
+  get   '/nicks/:id',             to: 'nicks#show', constraints: { id: VALID_NAME_REGEX }
   get   '/channels',              to: 'channels#list'
   post  '/channels',              to: 'channels#create'
   get   '/channels/:id',          to: 'channels#show'

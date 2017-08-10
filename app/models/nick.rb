@@ -18,6 +18,11 @@ class Nick < ApplicationRecord
 
   attr_accessor :token
 
+  before_save :downcase_name
+
+  validates :name, presence: true, length: { maximum: 50 },
+    format: { with: VALID_NAME_REGEX}, uniqueness: { case_sensitive: false }
+
   # Returns the hash digest of the given string.
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
@@ -27,6 +32,11 @@ class Nick < ApplicationRecord
   # Returns a random token.
   def self.new_token
     SecureRandom.urlsafe_base64
+  end
+
+  # get entry by id or name
+  def self.find_by_id_or_name(ref)
+    self.where(['id = :ref or name = :ref', { ref: ref.downcase }]).first!
   end
 
   # Store nick token digest in the database for use in persistent sessions.
@@ -39,4 +49,10 @@ class Nick < ApplicationRecord
   def authenticated?(token)
     BCrypt::Password.new(token_digest).is_password?(token)
   end
+
+  private
+    # Converts name to all lower-case.
+    def downcase_name
+      name.downcase!
+    end
 end

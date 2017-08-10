@@ -46,7 +46,7 @@ RSpec.describe 'Channels API', type: :request do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Channel/)
+        expect(response.body).to match(/Channel not found/)
       end
     end
   end
@@ -89,7 +89,7 @@ RSpec.describe 'Channels API', type: :request do
         end
 
         it 'returns a failure message' do
-          expect(response.body).to match(/Couldn't find Nick/)
+          expect(response.body).to match(/Nick not found/)
         end
       end
 
@@ -101,7 +101,7 @@ RSpec.describe 'Channels API', type: :request do
         end
 
         it 'returns a failure message' do
-          expect(response.body).to match(/Couldn't find Nick/)
+          expect(response.body).to match(/Nick not found/)
         end
       end
     end

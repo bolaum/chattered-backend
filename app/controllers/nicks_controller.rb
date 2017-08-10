@@ -5,7 +5,8 @@ class NicksController < ApplicationController
   end
 
   def show
-    json_response(Nick.find(params[:id]), include: associated_channels)
+    nick = Nick.find_by_id_or_name(params[:id])
+    json_response(nick, include: associated_channels)
   end
 
   private
