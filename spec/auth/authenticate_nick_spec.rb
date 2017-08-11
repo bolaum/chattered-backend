@@ -25,8 +25,8 @@ RSpec.describe AuthenticateNick do
         it 'raises a forbidden error' do
         expect { unavailable_auth_obj.call }
           .to raise_error(
-            ExceptionHandler::Forbidden,
-            /Nick already in use/
+            ExceptionHandler::NickInUse,
+            /Nickname already in use/
           )
         end
       end
@@ -37,8 +37,8 @@ RSpec.describe AuthenticateNick do
       it 'raises an authentication error' do
         expect { invalid_auth_obj.call }
           .to raise_error(
-            ActiveRecord::RecordNotFound,
-            /Couldn't find Nick/
+            ExceptionHandler::InvalidNickname,
+            /Invalid nickname/
           )
       end
     end

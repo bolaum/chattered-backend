@@ -21,7 +21,7 @@ class Nick < ApplicationRecord
   before_save :downcase_name
 
   validates :name, presence: true, length: { maximum: 50 },
-    format: { with: VALID_NAME_REGEX}, uniqueness: { case_sensitive: false }
+    format: { with: VALID_NAME_REGEXP}, uniqueness: { case_sensitive: false }
 
   # Returns the hash digest of the given string.
   def self.digest(string)

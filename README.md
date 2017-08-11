@@ -1,4 +1,4 @@
-# Chattered (Rails 5 API)
+# Chattered (Rails 5 API) [![Build Status](https://travis-ci.org/bolaum/chattered-backend.svg?branch=master)](https://travis-ci.org/bolaum/chattered-backend)
 
 ## Specification
 General
@@ -24,8 +24,8 @@ API
 ## Endpoints
 | Endpoint               | Method | Functionality                                     |
 | --------               | ------ | -------------                                     |
-| /login                 | POST   | Login (nick online)                               |
-| /logout                | DELETE | Logout (nick offline)                             |
+| /login                 | POST   | Login (if nick not in use)                        |
+| /logout                | DELETE | Logout                                            |
 | /nicks                 | GET    | List all nicks                                    |
 | /nicks/:id             | GET    | Get nick data (status, joined and owned channels) |
 | /channels              | GET    | List all channels                                 |

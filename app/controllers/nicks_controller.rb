@@ -10,6 +10,7 @@ class NicksController < ApplicationController
   end
 
   private
+
     def associated_channels
       { owned_channels: { only: :id }, joined_channels: { only: :id } }
     end

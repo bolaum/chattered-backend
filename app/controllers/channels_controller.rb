@@ -24,9 +24,10 @@ class ChannelsController < ApplicationController
   end
 
   private
+
     def channel_params
       # whitelist params
-      params.permit(:title)
+      params.require(:title) and params.permit(:title)
     end
 
     def set_nick
@@ -34,7 +35,11 @@ class ChannelsController < ApplicationController
     end
 
     def set_channel
-      @channel = Channel.find(params[:id])
+      begin
+        @channel = Channel.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        raise ExceptionHandler::ChannelNotFound
+      end
     end
 
     def joined_nicks_info

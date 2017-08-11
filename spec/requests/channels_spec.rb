@@ -77,7 +77,7 @@ RSpec.describe 'Channels API', type: :request do
         end
 
         it 'returns a failure message' do
-          expect(response.body).to match(/Validation failed: Title can't be blank/)
+          expect(response.body).to match(/Parameter 'title' not found/)
         end
       end
 
@@ -117,6 +117,7 @@ RSpec.describe 'Channels API', type: :request do
 
     it 'should join the channel' do
       get "/nicks/#{nick_id}"
+      expect(response).to have_http_status(200)
       expect(json['joined_channels'].size).to eq(1)
     end
   end
