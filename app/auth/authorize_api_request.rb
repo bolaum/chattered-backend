@@ -5,9 +5,7 @@ class AuthorizeApiRequest
 
   # Service entry point - return valid nick object
   def call
-    {
-      nick: nick
-    }
+    nick
   end
 
   private

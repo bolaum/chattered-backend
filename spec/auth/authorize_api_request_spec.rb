@@ -18,7 +18,7 @@ RSpec.describe AuthorizeApiRequest do
     context 'when valid request' do
       it 'returns nick object' do
         result = request_obj.call
-        expect(result[:nick]).to eq(nick)
+        expect(result).to eq(nick)
       end
     end
 

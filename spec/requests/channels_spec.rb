@@ -10,7 +10,7 @@ RSpec.describe 'Channels API', type: :request do
   # Test suite for GET /channels
   describe 'GET /channels' do
     # make HTTP get request before each example
-    before { get "/channels" }
+    before { get "/channels", headers: valid_headers }
 
     it 'returns channels' do
       # Note `json` is a custom helper to parse JSON responses
@@ -25,7 +25,7 @@ RSpec.describe 'Channels API', type: :request do
 
   # Test suite for GET /channels/:id
   describe 'GET /channels/:id' do
-    before { get "/channels/#{id}" }
+    before { get "/channels/#{id}", headers: valid_headers }
 
     context 'when the record exists' do
       it 'returns the channel' do
@@ -54,23 +54,24 @@ RSpec.describe 'Channels API', type: :request do
   # Test suite for POST /channels
   describe 'POST /channels' do
     let(:valid_attributes) { { title: 'VisitNarnia', nick_id: nick_id } }
+    before { post "/channels", params: params.to_json, headers: valid_headers }
 
     context 'when request attributes are valid' do
-      before { post "/channels", params: valid_attributes }
+      let(:params) { valid_attributes }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
       end
 
       it 'should create one channel' do
-        get "/channels"
+        get "/channels", headers: valid_headers
         expect(json.size).to eq(21)
       end
     end
 
     context 'when an invalid request' do
       context 'has a blank title' do
-        before { post "/channels", params: { title: '   ', nick_id: nick_id } }
+        let(:params) { { title: '   ', nick_id: nick_id } }
 
         it 'returns status code 422' do
           expect(response).to have_http_status(422)
@@ -82,7 +83,7 @@ RSpec.describe 'Channels API', type: :request do
       end
 
       context 'has no owner' do
-        before { post "/channels", params: { title: 'Wasteland' } }
+        let(:params) { { title: 'Wasteland' } }
 
         it 'returns status code 404' do
           expect(response).to have_http_status(404)
@@ -94,7 +95,7 @@ RSpec.describe 'Channels API', type: :request do
       end
 
       context 'has invalid owner' do
-        before { post "/channels", params: { title: 'Wasteland', nick_id: 1000 } }
+        let(:params) { { title: 'Wasteland', nick_id: 1000 } }
 
         it 'returns status code 404' do
           expect(response).to have_http_status(404)
@@ -109,14 +110,15 @@ RSpec.describe 'Channels API', type: :request do
 
   # Test suite for POST /channels/:id
   describe 'POST /channels/:id' do
-    before { post "/channels/#{id}", params: { nick_id: nick_id } }
+    let(:params) { { nick_id: nick_id } }
+    before { post "/channels/#{id}", params: params.to_json, headers: valid_headers }
 
     it 'returns status code 202' do
       expect(response).to have_http_status(202)
     end
 
     it 'should join the channel' do
-      get "/nicks/#{nick_id}"
+      get "/nicks/#{nick_id}", headers: valid_headers
       expect(response).to have_http_status(200)
       expect(json['joined_channels'].size).to eq(1)
     end

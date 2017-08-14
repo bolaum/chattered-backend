@@ -1,7 +1,7 @@
 module ControllerSpecHelper
   # generate tokens from nick id
   def token_generator(nick_id)
-    JsonWebToken.encode(nick_id: nick_id)
+    JsonWebToken.encode( { nick_id: nick_id }, 12.hours.from_now)
   end
 
   # generate expired tokens from user id
@@ -13,6 +13,14 @@ module ControllerSpecHelper
   def valid_headers
     {
       "Authorization" => token_generator(nick.id),
+      "Content-Type" => "application/json"
+    }
+  end
+
+  # return expired headers
+  def expired_headers
+    {
+      "Authorization" => expired_token_generator(nick.id),
       "Content-Type" => "application/json"
     }
   end

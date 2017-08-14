@@ -3,11 +3,13 @@ require 'rails_helper'
 RSpec.describe 'Nicks API', type: :request do
   # initialize test data
   let!(:nicks) { create_list(:nick, 10) }
+  let(:nick) { nicks[0] }
 
   # Test suite for GET /nicks
   describe 'GET /nicks' do
+
     # make HTTP get request before each example
-    before { get '/nicks' }
+    before { get '/nicks', headers: valid_headers }
 
     it 'returns nicks' do
       # Note `json` is a custom helper to parse JSON responses
@@ -21,7 +23,7 @@ RSpec.describe 'Nicks API', type: :request do
 
   shared_examples "get valid nick record" do |nick_field|
     context 'when the record exists' do
-      before { get "/nicks/#{nick_ref}" }
+      before { get "/nicks/#{nick_ref}", headers: valid_headers }
 
       it 'returns the nick' do
         expect(json).not_to be_empty
@@ -36,7 +38,7 @@ RSpec.describe 'Nicks API', type: :request do
 
   shared_examples "get invalid nick record" do |invalid_nick_ref|
     context 'when the record does not exist' do
-      before { get "/nicks/#{invalid_nick_ref}" }
+      before { get "/nicks/#{invalid_nick_ref}", headers: valid_headers }
 
       it 'returns status code 404' do
         expect(response).to have_http_status(404)
@@ -65,7 +67,7 @@ RSpec.describe 'Nicks API', type: :request do
       names.each do |name|
         it "returns the nick '#{name}'" do
           create(:nick, name: name)
-          get "/nicks/#{name}"
+          get "/nicks/#{name}", headers: valid_headers
           expect(json['name']).to eq(name)
         end
       end
