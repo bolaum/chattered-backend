@@ -19,7 +19,7 @@ RSpec.describe 'Authentication API', type: :request do
 
       it 'sets nick online' do
         get "/nicks/#{params[:name]}", headers: valid_headers
-        expect(json['status']).to eq('online')
+        expect(jsonapi['status']).to eq('online')
       end
 
     end

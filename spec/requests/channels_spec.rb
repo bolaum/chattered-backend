@@ -13,9 +13,8 @@ RSpec.describe 'Channels API', type: :request do
     before { get "/channels", headers: valid_headers }
 
     it 'returns channels' do
-      # Note `json` is a custom helper to parse JSON responses
-      expect(json).not_to be_empty
-      expect(json.size).to eq(20)
+      expect(jsonapi).not_to be_empty
+      expect(jsonapi.size).to eq(20)
     end
 
     it 'returns status code 200' do
@@ -29,8 +28,8 @@ RSpec.describe 'Channels API', type: :request do
 
     context 'when the record exists' do
       it 'returns the channel' do
-        expect(json).not_to be_empty
-        expect(json['id']).to eq(id)
+        expect(jsonapi).not_to be_empty
+        expect(jsonapi['id']).to eq(id.to_s)
       end
 
       it 'returns status code 200' do
@@ -65,7 +64,7 @@ RSpec.describe 'Channels API', type: :request do
 
       it 'should create one channel' do
         get "/channels", headers: valid_headers
-        expect(json.size).to eq(21)
+        expect(jsonapi.size).to eq(21)
       end
     end
 
@@ -120,7 +119,7 @@ RSpec.describe 'Channels API', type: :request do
     it 'should join the channel' do
       get "/nicks/#{nick_id}", headers: valid_headers
       expect(response).to have_http_status(200)
-      expect(json['joined_channels'].size).to eq(1)
+      expect(jsonapi['joined_channel_ids'].size).to eq(1)
     end
   end
 end

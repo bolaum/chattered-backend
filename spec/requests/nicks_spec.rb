@@ -12,8 +12,7 @@ RSpec.describe 'Nicks API', type: :request do
     before { get '/nicks', headers: valid_headers }
 
     it 'returns nicks' do
-      # Note `json` is a custom helper to parse JSON responses
-      expect(json.size).to eq(10)
+      expect(jsonapi.size).to eq(10)
     end
 
     it 'returns status code 200' do
@@ -26,8 +25,8 @@ RSpec.describe 'Nicks API', type: :request do
       before { get "/nicks/#{nick_ref}", headers: valid_headers }
 
       it 'returns the nick' do
-        expect(json).not_to be_empty
-        expect(json[nick_field]).to eq(nick_ref)
+        expect(jsonapi).not_to be_empty
+        expect(jsonapi[nick_field]).to eq(nick_ref.to_s)
       end
 
       it 'returns status code 200' do
@@ -68,7 +67,7 @@ RSpec.describe 'Nicks API', type: :request do
         it "returns the nick '#{name}'" do
           create(:nick, name: name)
           get "/nicks/#{name}", headers: valid_headers
-          expect(json['name']).to eq(name)
+          expect(jsonapi['name']).to eq(name)
         end
       end
     end

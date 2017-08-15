@@ -14,9 +14,8 @@ RSpec.describe 'Messages API', type: :request do
     before { get "/channels/#{channel_id}/messages", headers: valid_headers }
 
     it 'returns messages for channel' do
-      # Note `json` is a custom helper to parse JSON responses
-      expect(json).not_to be_empty
-      expect(json.size).to eq(50)
+      expect(jsonapi).not_to be_empty
+      expect(jsonapi.size).to eq(50)
     end
 
     it 'returns status code 200' do
@@ -42,7 +41,7 @@ RSpec.describe 'Messages API', type: :request do
 
         it 'should not add message to channel' do
           get "/channels/#{channel_id}/messages", headers: valid_headers
-          expect(json.size).to eq(50)
+          expect(jsonapi.size).to eq(50)
         end
       end
 
@@ -58,7 +57,7 @@ RSpec.describe 'Messages API', type: :request do
 
         it 'should add one message to channel' do
           get "/channels/#{channel_id}/messages", headers: valid_headers
-          expect(json.size).to eq(51)
+          expect(jsonapi.size).to eq(51)
         end
       end
     end
