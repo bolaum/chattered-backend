@@ -30,7 +30,7 @@ class AuthenticateNick
         # check if nick exists
         unless nick
           # create if it doesn't
-          nick = Nick.create(name: name, token_digest: 'notatoken', status: 'offline')
+          nick = Nick.create(name: name, status: 'offline')
         end
         # check if nick is available
       else

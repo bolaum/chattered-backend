@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20170807135820) do
 
   create_table "nicks", force: :cascade do |t|
     t.string "name", null: false
-    t.string "token_digest", null: false
     t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

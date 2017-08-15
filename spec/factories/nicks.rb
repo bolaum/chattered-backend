@@ -15,7 +15,6 @@ FactoryGirl.define do
     end
 
     name { generate :name }
-    token_digest { Nick.digest('notatoken') }
     status 'online'
   end
 end
