@@ -7,13 +7,7 @@ module V1
 
     def show
       nick = Nick.find_by_id_or_name(params[:id])
-      json_response(nick)
+      json_response(nick, include: :joined_channels)
     end
-
-    private
-
-      def associated_channels
-        { owned_channels: { only: :id }, joined_channels: { only: :id } }
-      end
   end
 end

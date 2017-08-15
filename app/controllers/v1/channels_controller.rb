@@ -5,25 +5,25 @@ module V1
 
     def list
       channels = Channel.all
-      json_response(channels)
+      json_response(channels, each_serializer: ChannelSerializer::ChannelShortSerializer)
     end
 
     def show
-      json_response(@channel)
+      json_response(@channel, include: :joined_nicks, serializer: ChannelSerializer::ChannelFullSerializer)
       # json_response(@channel, include: joined_nicks_info)
       # json_response(@channel, include: complete_info)
     end
 
     def create
       channel = @nick.owned_channels.create!(channel_params)
-      json_response(channel, :created)
+      json_response(channel, :created, serializer: ChannelSerializer::ChannelShortSerializer)
     end
 
     def join
       unless @nick.joined_channels.exists?(@channel.id)
         @nick.joined_channels << @channel
       end
-      json_response(@channel, :accepted)
+      json_response(@channel, :accepted, serializer: ChannelSerializer::ChannelShortSerializer)
     end
 
     private
@@ -43,14 +43,6 @@ module V1
         rescue ActiveRecord::RecordNotFound
           raise ExceptionHandler::ChannelNotFound
         end
-      end
-
-      def joined_nicks_info
-        { joined_nicks: { only: [:id, :name, :status] } }
-      end
-
-      def complete_info
-        joined_nicks_info.merge(messages: {}, owner: {})
       end
   end
 end

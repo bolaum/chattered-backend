@@ -53,6 +53,13 @@ guard :rspec, cmd: "bundle exec rspec -fd" do
     ]
   end
 
+  watch(/^app\/controllers\/v[0-9]+\/(.+)_controller\.rb$/) do |m|
+    [
+      rspec.spec.call("acceptance/#{m[1]}"),
+      rspec.spec.call("requests/#{m[1]}")
+    ]
+  end
+
   # Rails config changes
   watch(rails.spec_helper)     { rspec.spec_dir }
   watch(rails.routes)          { "#{rspec.spec_dir}/requests" }
