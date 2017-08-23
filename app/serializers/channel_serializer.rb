@@ -7,6 +7,6 @@ module ChannelSerializer
     attributes :id, :title, :created_at
     # has_many :messages
     has_many :joined_nicks
-    belongs_to :owner
+    belongs_to :owner, class_name: 'Nick'
   end
 end

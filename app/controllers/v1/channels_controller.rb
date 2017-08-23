@@ -10,6 +10,7 @@ module V1
 
     def show
       json_response(@channel, include: :joined_nicks, serializer: ChannelSerializer::ChannelFullSerializer)
+      # json_response(@channel, serializer: ChannelSerializer::ChannelFullSerializer)
       # json_response(@channel, include: joined_nicks_info)
       # json_response(@channel, include: complete_info)
     end

@@ -19,7 +19,7 @@ gem 'puma', '~> 3.9.1'
 # Use ActiveModel has_secure_password
 gem 'bcrypt'
 gem 'jwt'
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'active_model_serializers', '~> 0.10.2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

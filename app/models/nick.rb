@@ -22,17 +22,6 @@ class Nick < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 },
     format: { with: VALID_NAME_REGEXP}, uniqueness: { case_sensitive: false }
 
-  # Returns the hash digest of the given string.
-  def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
-  end
-
-  # Returns a random token.
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
-
   # get entry by id or name
   def self.find_by_id_or_name(ref)
     self.where(['id = :ref or name = :ref', { ref: ref.downcase }]).first!
